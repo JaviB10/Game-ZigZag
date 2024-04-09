@@ -7,9 +7,13 @@ public class CharacterControl : MonoBehaviour
     private Rigidbody rb;
     private bool walkForward = true;
 
+    public Transform beginningRay;
+    private Animator animator;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -18,7 +22,14 @@ public class CharacterControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             VeerOff();
-        }   
+        }
+
+        RaycastHit contact;
+
+        if (!Physics.Raycast(beginningRay.position, -transform.up, out contact, Mathf.Infinity))
+        {
+            animator.SetTrigger("Falling");
+        }
     }
 
     private void FixedUpdate()
