@@ -34,7 +34,7 @@ public class CharacterControl : MonoBehaviour
             animator.SetTrigger("Falling");
         }
 
-        if(transform.position.y < -2)
+        if(transform.position.y < -3)
         {
             gameManager.GameOver();
         }
@@ -56,6 +56,11 @@ public class CharacterControl : MonoBehaviour
 
     private void VeerOff()
     {
+        if (!gameManager.gameStarted)
+        {
+            return;
+        }
+
         walkForward = !walkForward;
 
         if (walkForward)
@@ -65,6 +70,15 @@ public class CharacterControl : MonoBehaviour
         else
         {
             transform.rotation = Quaternion.Euler(0, -45, 0);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Crystal")
+        {
+            Destroy(other.gameObject);
+            gameManager.IncreaseScore();
         }
     }
 }
