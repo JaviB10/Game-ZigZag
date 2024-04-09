@@ -10,10 +10,13 @@ public class CharacterControl : MonoBehaviour
     public Transform beginningRay;
     private Animator animator;
 
+    private GameManager gameManager;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -34,6 +37,15 @@ public class CharacterControl : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!gameManager.gameStarted)
+        {
+            return;
+        }
+        else
+        {
+            animator.SetTrigger("GameStarted");
+        }
+
         rb.transform.position = transform.position + transform.forward * 2 * Time.deltaTime;
     }
 
