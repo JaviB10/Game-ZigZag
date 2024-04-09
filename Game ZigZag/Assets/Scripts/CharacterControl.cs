@@ -33,6 +33,11 @@ public class CharacterControl : MonoBehaviour
         {
             animator.SetTrigger("Falling");
         }
+
+        if(transform.position.y < -2)
+        {
+            gameManager.GameOver();
+        }
     }
 
     private void FixedUpdate()
