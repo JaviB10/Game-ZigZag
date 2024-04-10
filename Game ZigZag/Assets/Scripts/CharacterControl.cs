@@ -12,6 +12,9 @@ public class CharacterControl : MonoBehaviour
 
     private GameManager gameManager;
 
+    public GameObject CrystalEffect;
+    public GameObject CoinEffect;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -72,13 +75,28 @@ public class CharacterControl : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, -45, 0);
         }
     }
-
+    public AudioSource soundCoin;
+    public AudioSource soundCrystal;
+    public int scores;
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Crystal")
+        if(other.tag == "Coin")
         {
+            scores = 10;
+            gameManager.IncreaseScore(scores);
+            this.soundCoin.Play();
+            GameObject g = Instantiate(CoinEffect, beginningRay.transform.position, Quaternion.identity);
+            Destroy(g, 2);
             Destroy(other.gameObject);
-            gameManager.IncreaseScore();
+        }
+        else if(other.tag == "Crystal")
+        {
+            scores = 50;
+            gameManager.IncreaseScore(scores);
+            this.soundCrystal.Play();
+            GameObject g = Instantiate(CrystalEffect, beginningRay.transform.position, Quaternion.identity);
+            Destroy(g, 2);
+            Destroy(other.gameObject);
         }
     }
 }

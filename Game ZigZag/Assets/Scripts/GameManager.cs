@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         gameStarted = true;
+        FindObjectOfType<Path>().StartBuild();
     }
 
     private void Update()
@@ -34,9 +35,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void IncreaseScore()
+    public void IncreaseScore(int scores)
     {
-        score++;
+        score += scores;
 
         if(score > ScoreMax())
         {
